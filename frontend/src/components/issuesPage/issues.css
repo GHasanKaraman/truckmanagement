@@ -1,0 +1,44 @@
+.card-actions {
+  color: #27303b;
+}
+
+.card-actions:hover {
+  color: #fffffe;
+}
+
+.card-time {
+  color: #1d252b;
+  font-weight: bold;
+  text-align: center;
+}
+.card-date {
+  color: #1d252b;
+  font-weight: bold;
+}
+
+.text {
+  color: #fff6f9;
+}
+
+.list-items {
+  margin-bottom: 10px;
+}
+
+.ant-list-item-action {
+  width: 250px;
+}
+
+.blink {
+  animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.ant-select-item .ant-select-item-option-content {
+  white-space: break-spaces;
+  word-break: break-word;
+}
