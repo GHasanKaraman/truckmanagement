@@ -1,9 +1,7 @@
 const express = require("express");
 const moment = require("moment-timezone");
 
-const issueModel = require("../models/issue");
-const giveLogModel = require("../models/giveLog");
-const partModel = require("../models/part");
+const formModel = require("../models/form");
 const { numberFormatToEU, verifyPermissions } = require("../utils/essentials");
 
 const router = express.Router();
@@ -11,7 +9,7 @@ const router = express.Router();
 async function getDashBoardData(range) {
   const { start, end } = range;
 
-  const issues = await issueModel.aggregate([
+  const issues = await formModel.aggregate([
     {
       $match: {
         $and: [

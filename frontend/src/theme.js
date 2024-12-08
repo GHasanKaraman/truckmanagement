@@ -94,6 +94,19 @@ export const tokens = (mode) => ({
           800: "#66261e",
           900: "#33130f",
         },
+        crusta: {
+          50: "#fff5ed",
+          100: "#fee8d6",
+          200: "#fcceac",
+          300: "#faab77",
+          400: "#f77838",
+          500: "#f55b1a",
+          600: "#e64010",
+          700: "#be2e10",
+          800: "#972615",
+          900: "#7a2214",
+          950: "#420e08",
+        },
         orangeAccent: {
           100: "#FFE0B2",
           200: "#FFCC80",
@@ -207,6 +220,20 @@ export const tokens = (mode) => ({
           800: "#ffbfb7",
           900: "#ffdfdb",
         },
+        crusta: {
+          950: "#fff5ed",
+          900: "#fee8d6",
+          800: "#fcceac",
+          700: "#faab77",
+          600: "#f77838",
+          500: "#f55b1a",
+          400: "#e64010",
+          300: "#be2e10",
+          200: "#972615",
+          100: "#7a2214",
+          50: "#420e08",
+        },
+
         orangeAccent: {
           100: "#E65100",
           200: "#EF6C00",
@@ -245,7 +272,7 @@ export const themeSettings = (mode) => {
               main: colors.primary[500],
             },
             secondary: {
-              main: colors.ciboInnerGreen[500],
+              main: colors.crusta[400],
             },
             neutral: {
               dark: colors.grey[700],
@@ -262,7 +289,7 @@ export const themeSettings = (mode) => {
               main: colors.primary[100],
             },
             secondary: {
-              main: colors.ciboInnerGreen[500],
+              main: colors.crusta[500],
             },
             neutral: {
               dark: colors.grey[700],
@@ -316,7 +343,7 @@ export const ColorModeContext = createContext({
 
 export const useMode = () => {
   const [mode, setMode] = useState(
-    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light",
   );
 
   const colorMode = useMemo(
@@ -328,7 +355,7 @@ export const useMode = () => {
           return current;
         }),
     }),
-    []
+    [],
   );
 
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);

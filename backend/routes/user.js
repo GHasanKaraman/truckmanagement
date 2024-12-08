@@ -1,6 +1,6 @@
 const express = require("express");
 const sharp = require("sharp");
-const upload = require("../file");
+const upload = require("../singleFile");
 
 const userModel = require("../models/user");
 const essentials = require("../utils/essentials");
@@ -114,24 +114,13 @@ router.put("/profile/upload", upload.single("file"), async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const {
-      name,
-      surname,
-      username,
-      phone,
-      facility,
-      zone,
-      position,
-      permissions,
-    } = req.body;
+    const { name, surname, username, phone, position, permissions } = req.body;
 
     const result = await userModel.create({
       name: capitalizeFirst(name),
       surname: capitalizeFirst(surname),
       username,
       phone,
-      facility,
-      zone,
       position,
       permissions,
     });
@@ -151,21 +140,11 @@ router.post("/", async (req, res) => {
 
 router.put("/", async (req, res) => {
   try {
-    const {
-      _id,
-      name,
-      surname,
-      facility,
-      phone,
-      position,
-      zone,
-      username,
-      showQR,
-    } = req.body;
+    const { _id, name, surname, phone, position, username, showQR } = req.body;
     if (_id) {
       const result = await userModel.updateOne(
         { _id: _id },
-        { name, surname, facility, phone, position, zone, username, showQR },
+        { name, surname, phone, position, username, showQR },
       );
       if (result.modifiedCount !== 0) {
         console.log("\x1b[32m%s\x1b[0m", "User updated!");

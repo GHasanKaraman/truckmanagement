@@ -97,42 +97,6 @@ const ViewUsersPage = (props) => {
       editable: true,
     },
     {
-      field: "facility",
-      headerName: "Facility",
-      flex: 0.5,
-      renderCell: ({ row: { facility } }) => {
-        return facility.toUpperCase();
-      },
-      filterable: false,
-      sortable: false,
-      editable: true,
-      renderEditCell: (params) => (
-        <AutocompleteEditInputCell
-          type="single"
-          {...params}
-          options={["vreeland", "madison"]}
-        />
-      ),
-    },
-    {
-      field: "zone",
-      headerName: "Zone",
-      flex: 0.4,
-      renderCell: ({ row: { zone } }) => {
-        return zone.toUpperCase();
-      },
-      editable: true,
-      filterable: false,
-      sortable: false,
-      renderEditCell: (params) => (
-        <AutocompleteEditInputCell
-          type="single"
-          {...params}
-          options={["office", "zone 1", "zone 2", "zone 3", "zone 4", "zone 5"]}
-        />
-      ),
-    },
-    {
       field: "position",
       headerName: "Position",
       flex: 0.6,
@@ -149,7 +113,7 @@ const ViewUsersPage = (props) => {
     },
     {
       field: "showQR",
-      headerName: "QR Perm",
+      headerName: "QR Show",
       flex: 0.5,
       type: "boolean",
       filterable: false,

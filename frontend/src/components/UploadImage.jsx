@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import {
   Button,
@@ -277,6 +277,7 @@ const UploadImage = ({
           </IconButton>
         ) : mode === "custom" ? (
           <input
+            capture="environment"
             ref={customRef}
             hidden
             accept="image/*"
@@ -363,6 +364,7 @@ const UploadImage = ({
             hidden
             accept="image/*"
             type="file"
+            capture="environment"
             onChange={onLoadImage}
           />
           <IconButton
@@ -380,6 +382,7 @@ const UploadImage = ({
           hidden
           accept="image/*"
           type="file"
+          capture="environment"
           onChange={onLoadImage}
         />
       ) : (
@@ -407,6 +410,7 @@ const UploadImage = ({
             hidden
             accept="image/*"
             type="file"
+            capture="environment"
             onChange={onLoadImage}
           />
         </IconButton>

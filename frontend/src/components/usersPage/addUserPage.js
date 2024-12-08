@@ -53,12 +53,6 @@ const AddUserPage = (props) => {
         "Please enter the phone number!",
         (value) => value.length == 12,
       ),
-    facility: yup
-      .string()
-      .required("Please select which facility this user works at!"),
-    zone: yup
-      .string()
-      .required("Please select  which zone this user is responsible for!"),
     position: yup
       .string()
       .required("Please select which position this user is in!"),
@@ -68,8 +62,6 @@ const AddUserPage = (props) => {
     surname: "",
     username: "",
     phone: "",
-    facility: "",
-    zone: "",
     position: "",
     permissions: [],
   };
@@ -264,71 +256,6 @@ const AddUserPage = (props) => {
               <TextField
                 variant="filled"
                 select
-                label="Facility"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.facility}
-                name="facility"
-                error={!!touched.facility && !!errors.facility}
-                helperText={touched.facility && errors.facility}
-                sx={{ gridColumn: "span 2" }}
-              >
-                <MenuItem key={"vreeland"} value={"vreeland"}>
-                  VREELAND
-                </MenuItem>
-                <MenuItem key={"madison"} value={"madison"}>
-                  MADISON
-                </MenuItem>
-              </TextField>
-              <TextField
-                variant="filled"
-                select
-                label="Zone"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.zone}
-                name="zone"
-                error={!!touched.zone && !!errors.zone}
-                helperText={touched.zone && errors.zone}
-                sx={{ gridColumn: "span 2" }}
-              >
-                <MenuItem key={"office"} value={"office"}>
-                  OFFICE
-                </MenuItem>
-                <MenuItem key={"zone1"} value={"zone 1"}>
-                  ZONE 1
-                </MenuItem>
-                <MenuItem key={"zone2"} value={"zone 2"}>
-                  ZONE 2
-                </MenuItem>
-                <MenuItem key={"zone3"} value={"zone 3"}>
-                  ZONE 3
-                </MenuItem>
-                <MenuItem key={"zone4"} value={"zone 4"}>
-                  ZONE 4
-                </MenuItem>
-                <MenuItem key={"zone5"} value={"zone 5"}>
-                  ZONE 5
-                </MenuItem>
-                <MenuItem key={"zone6"} value={"zone 6"}>
-                  ZONE 6
-                </MenuItem>
-                <MenuItem key={"zone7"} value={"zone 7"}>
-                  ZONE 7
-                </MenuItem>
-                <MenuItem key={"zone8"} value={"zone 8"}>
-                  ZONE 8
-                </MenuItem>
-                <MenuItem key={"zone9"} value={"zone 9"}>
-                  ZONE 9
-                </MenuItem>
-                <MenuItem key={"zone10"} value={"zone 10"}>
-                  ZONE 10
-                </MenuItem>
-              </TextField>
-              <TextField
-                variant="filled"
-                select
                 label="Position"
                 onBlur={handleBlur}
                 onChange={handleChange}
@@ -338,8 +265,8 @@ const AddUserPage = (props) => {
                 helperText={touched.position && errors.position}
                 sx={{ gridColumn: "span 2" }}
               >
-                <MenuItem key={"technician"} value={"Technician"}>
-                  TECHNICIAN
+                <MenuItem key={"driver"} value={"Driver"}>
+                  DRIVER
                 </MenuItem>
               </TextField>
               <Autocomplete

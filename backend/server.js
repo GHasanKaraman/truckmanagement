@@ -6,29 +6,12 @@ const moment = require("moment-timezone");
 //
 //express routes
 const dashboard = require("./routes/dashboard.js");
-const part = require("./routes/parts.js");
-const tags = require("./routes/tags.js");
-const location = require("./routes/location.js");
 const qr = require("./routes/qr.js");
-const monitoring = require("./routes/monitoring.js");
 const user = require("./routes/user.js");
-const logs = require("./routes/logs.js");
-const report = require("./routes/report.js");
-const vendor = require("./routes/vendor.js");
-const problem = require("./routes/problem.js");
-const superior = require("./routes/superior.js");
-const machineType = require("./routes/machineType.js");
-const fixingMethod = require("./routes/fixingMethod.js");
-const target = require("./routes/target.js");
-const issue = require("./routes/issue.js");
-const purchases = require("./routes/purchases.js");
-const pos = require("./routes/pos.js");
+const truck = require("./routes/truck.js");
+const form = require("./routes/form.js");
 const authorization = require("./routes/authorization.js");
 const authentication = require("./routes/authentication.js");
-
-const cameras = require("./routes/cameras.js");
-
-const request = require("request");
 
 var morgan = require("morgan");
 var fs = require("fs");
@@ -103,14 +86,12 @@ db.once("open", function () {
     }
   });
 
+  app.use("/imgs", express.static(__dirname + "/imgs"));
   app.use("/uploads", express.static(__dirname + "/uploads"));
 
   app.get("/", async (req, res) => {
     res.send("CiboENG Server!");
   });
-
-  app.use("/", cameras);
-  app.use("/monitoring", monitoring);
 
   app.use("/qr", qr);
   app.use("/", authentication);
@@ -118,22 +99,9 @@ db.once("open", function () {
   app.use("/", authorization);
 
   app.use("/dashboard", dashboard);
-  app.use("/parts", part);
-  app.use("/vendor", vendor);
   app.use("/user", user);
-  app.use("/purchase", purchases);
-  app.use("/po", pos);
-  app.use("/labels", tags);
-  app.use("/logs", logs);
-  app.use("/report", report);
-  app.use("/location", location);
-  app.use("/vendor", vendor);
-  app.use("/machinetype", machineType);
-  app.use("/target", target);
-  app.use("/fixingmethod", fixingMethod);
-  app.use("/problem", problem);
-  app.use("/superior", superior);
-  app.use("/issue", issue);
+  app.use("/truck", truck);
+  app.use("/issue", form);
 
   app.listen(process.env.PORT, () => {
     var txt = encodeURIComponent(

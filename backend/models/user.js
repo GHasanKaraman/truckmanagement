@@ -12,10 +12,8 @@ const userSchema = new mongoose.Schema(
       required: true,
       default: "202cb962ac59075b964b07152d234b70", //md5(123)
     },
-    facility: { type: String, required: true, default: "vreeland" },
     phone: { type: String, required: true, default: "0000000000" },
     position: { type: String, required: true, default: "Technician" },
-    zone: { type: String, required: true, default: "zone 1" },
     nkey: { type: String, default: "" },
     notifications: { type: String, default: "disabled" },
     permissions: { type: String },

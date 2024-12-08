@@ -1,10 +1,7 @@
 const fs = require("fs");
 
-const partModel = require("../models/part");
-const purchasesModel = require("../models/purchases");
-const posModel = require("../models/po");
 const userModel = require("../models/user.js");
-const issueModel = require("../models/issue.js");
+const formModel = require("../models/form.js");
 
 const moment = require("moment-timezone");
 
@@ -49,7 +46,7 @@ const deleteUserImage = async (id) => {
 
 const deleteIssueImage = async (id) => {
   try {
-    const result = await issueModel.find({ _id: id }, {});
+    const result = await formModel.find({ _id: id }, {});
     const image = result[0].image;
     if (image === "") {
       return 1;
