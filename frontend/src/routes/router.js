@@ -13,7 +13,7 @@ import ViewUsersPage from "../components/usersPage/viewUsersPage";
 import ViewTrucksPage from "../components/trucksPage/viewTrucksPage.js";
 import AddTruckPage from "../components/trucksPage/addTruckPage.js";
 
-import ViewIssuesPage from "../components/dashboardPage//viewIssuesPage";
+import DashboardPage from "../components/dashboardPage/dashboardPage.js";
 
 import MyProfilePage from "../components/myProfilePage/myProfilePage";
 import SettingsPage from "../components/settingsPage/settingsPage";
@@ -22,6 +22,7 @@ import { ColorModeContext, useMode } from "../theme";
 
 import NoAccessPage from "../components/noAccessPage/NoAccessPage";
 import TruckPreOperationalChecklist from "../components/preOperationalPage/truckPreOperationalPage.js";
+import ViewFormPage from "../components/preOperationalPage/viewForm.js";
 
 const BarLayout = () => {
   const [theme, colorMode] = useMode();
@@ -115,7 +116,12 @@ const Router = () => {
         <Route
           exact
           path="/dashboard"
-          element={<ViewIssuesPage title="CiboENG | Dashboard" />}
+          element={<DashboardPage title="CiboENG | Dashboard" />}
+        />
+        <Route
+          exact
+          path="/form/:id"
+          element={<ViewFormPage title="CiboENG | Form Details" />}
         />
         <Route path="*" element={<Navigate to="/" />} />
       </Route>

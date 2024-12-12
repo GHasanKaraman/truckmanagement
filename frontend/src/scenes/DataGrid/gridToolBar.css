@@ -1,19 +1,19 @@
 .MuiDataGrid-panel button.MuiButtonBase-root {
-  color: #73b569;
+  color: #f55b1a;
   font-weight: bold;
 }
 
 .MuiDataGrid-panel .MuiInputBase-root::before {
-  border-bottom-color: #73b569;
+  border-bottom-color: #f55b1a;
 }
 .MuiDataGrid-panel .MuiInputBase-root::after {
-  border-bottom-color: #73b569;
+  border-bottom-color: #f55b1a;
 }
 
 .MuiDataGrid-panel .MuiSwitch-switchBase.Mui-checked {
-  color: #5c9154;
+  color: #e64010;
 }
 
 .MuiDataGrid-panel .MuiFormLabel-root.Mui-focused {
-  color: #5c9154;
+  color: #e64010;
 }

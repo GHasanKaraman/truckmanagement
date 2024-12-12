@@ -1,6 +1,6 @@
 import QRCodeStyling from "qr-code-styling";
 
-import logo from "../images/logo.png";
+import truck from "../images/truck.gif";
 import { useEffect, useRef } from "react";
 
 const QRGenerator = (props) => {
@@ -19,7 +19,7 @@ const QRGenerator = (props) => {
       color: "#000",
     },
     backgroundOptions: { color: "#fff" },
-    image: logo,
+    image: truck,
     dotsOptionsHelper: {
       colorType: { single: true, gradient: false },
       color: "#000",

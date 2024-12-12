@@ -13,6 +13,9 @@ const formSchema = new mongoose.Schema(
     areThereDEF: { type: String, required: true },
 
     status: { type: Number, default: 0 },
+    formType: { type: Number, default: 0 },
+
+    comment: { type: String, default: "" },
   },
   { timestamps: true },
 );

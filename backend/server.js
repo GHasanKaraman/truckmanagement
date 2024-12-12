@@ -101,7 +101,7 @@ db.once("open", function () {
   app.use("/dashboard", dashboard);
   app.use("/user", user);
   app.use("/truck", truck);
-  app.use("/issue", form);
+  app.use("/form", form);
 
   app.listen(process.env.PORT, () => {
     var txt = encodeURIComponent(

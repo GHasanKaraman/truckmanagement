@@ -11,12 +11,12 @@ const userModel = require("../models/user.js");
 
 router.get("/truck", async (req, res) => {
   try {
-    const { id } = req.body;
-    const trucks = await truckModel.find({ id });
+    const { id } = req.query;
+    const truck = await truckModel.findOne({ _id: id });
     const users = await userModel.find({ showQR: true }).select("-password");
-    if (trucks) {
+    if (users && truck) {
       res.status(200).json({
-        records: { truck: trucks[0], users },
+        records: { truck, users },
       });
       console.log("Retrieved truck information from QR!");
     } else {

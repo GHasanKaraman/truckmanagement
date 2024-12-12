@@ -29,7 +29,7 @@ export function QuickSearchToolbar(props) {
         placeholder="Search…"
         InputProps={{
           startAdornment: (
-            <SearchIcon fontSize="small" htmlColor={colors.ciboInnerGreen[300]} />
+            <SearchIcon fontSize="small" htmlColor={colors.crusta[300]} />
           ),
           endAdornment: (
             <IconButton
@@ -47,7 +47,7 @@ export function QuickSearchToolbar(props) {
       <Box
         className="gridtoolbar"
         sx={{
-          "& button": { color: colors.ciboInnerGreen[300] },
+          "& button": { color: colors.crusta[300] },
         }}
       >
         <GridToolbarColumnsButton />

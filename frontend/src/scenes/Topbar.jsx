@@ -102,6 +102,7 @@ const Topbar = () => {
           )}
         </IconButton>
         <IconButton
+          sx={{ display: "none" }}
           aria-label="noti"
           id="noti-button"
           onClick={handleClickNoti}

@@ -195,13 +195,13 @@ const AddUserPage = (props) => {
               sx={{
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
                 "& .MuiInputBase-root::after": {
-                  borderBottomColor: colors.ciboInnerGreen[500],
+                  borderBottomColor: colors.crusta[500],
                 },
                 "& .MuiInputBase-root::before": {
-                  borderBottomColor: colors.ciboInnerGreen[600],
+                  borderBottomColor: colors.crusta[600],
                 },
                 "& .MuiFormLabel-root.Mui-focused": {
-                  color: colors.ciboInnerGreen[300],
+                  color: colors.crusta[300],
                 },
               }}
             >
@@ -302,8 +302,8 @@ const AddUserPage = (props) => {
                         variant="filled"
                         color="primary"
                         style={{
-                          backgroundColor: colors.ciboInnerGreen[600],
-                          color: colors.ciboInnerGreen[100],
+                          backgroundColor: colors.crusta[600],
+                          color: colors.crusta[50],
                           fontWeight: "bold",
                         }}
                         {...tagProps({ index })}

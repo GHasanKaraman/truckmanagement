@@ -121,9 +121,9 @@ const ViewUsersPage = (props) => {
       editable: true,
       renderCell: ({ value }) => {
         if (value) {
-          return <HowToReg sx={{ color: colors.ciboInnerGreen[500] }} />;
+          return <HowToReg sx={{ color: colors.ciboOuterGreen[400] }} />;
         }
-        return <PersonOff sx={{ color: colors.yoggieRed[500] }} />;
+        return <PersonOff sx={{ color: colors.crusta[400] }} />;
       },
     },
 
@@ -148,7 +148,7 @@ const ViewUsersPage = (props) => {
                   ? colors.omegaDeluxPurple[500]
                   : permissions === ""
                     ? colors.redAccent[500]
-                    : colors.ciboInnerGreen[600]
+                    : colors.crusta[600]
             }
             borderRadius="4px"
           >
@@ -204,7 +204,7 @@ const ViewUsersPage = (props) => {
               <EditIcon
                 sx={{
                   padding: "3px",
-                  background: colors.ciboInnerGreen[400],
+                  background: colors.crusta[400],
                   borderRadius: 1,
                   color: colors.primary[400],
                   fontSize: "25px",
@@ -356,10 +356,10 @@ const ViewUsersPage = (props) => {
             borderBottom: "none",
           },
           "& .name-column--cell": {
-            color: colors.ciboInnerGreen[300],
+            color: colors.crusta[300],
           },
           "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: colors.ciboInnerGreen[500],
+            backgroundColor: colors.crusta[600],
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
@@ -367,10 +367,10 @@ const ViewUsersPage = (props) => {
           },
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",
-            backgroundColor: colors.ciboInnerGreen[500],
+            backgroundColor: colors.crusta[600],
           },
           "& .MuiCheckbox-root": {
-            color: `${colors.ciboInnerGreen[200]} !important`,
+            color: `${colors.crusta[200]} !important`,
           },
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
             color: `${colors.grey[100]} !important`,
@@ -385,10 +385,10 @@ const ViewUsersPage = (props) => {
             backgroundColor: "red",
           }*/,
           "& .MuiInputBase-root::after": {
-            borderBottomColor: colors.ciboInnerGreen[500],
+            borderBottomColor: colors.crusta[500],
           },
           "& .MuiInputBase-root::before": {
-            borderBottomColor: colors.ciboInnerGreen[600],
+            borderBottomColor: colors.crusta[600],
           },
         }}
       >

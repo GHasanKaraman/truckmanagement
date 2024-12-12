@@ -68,8 +68,8 @@ export function AutocompleteEditInputCell(props) {
               variant="filled"
               color="primary"
               style={{
-                backgroundColor: colors.ciboInnerGreen[600],
-                color: colors.ciboInnerGreen[100],
+                backgroundColor: colors.crusta[600],
+                color: colors.crusta[100],
                 fontWeight: "bold",
               }}
               {...tagProps({ index })}

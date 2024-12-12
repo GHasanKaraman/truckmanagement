@@ -9,23 +9,37 @@ section {
 
 @keyframes moveCar {
   0% {
-    left: -100vw;
+    left: -110vw;
   }
   100% {
-    left: 60vw;
+    left: 90vw;
   }
 }
 
-section .bg {
-  position: absolute;
-  top: 0;
+section .logo {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  text-align: center;
+  align-content: center;
+}
+
+.logo .truck {
+  position: relative;
   left: auto;
   animation: moveCar 10s linear infinite;
 
   margin-left: 250px;
   width: 100%;
-  margin-top: -10px;
   pointer-events: none;
+}
+
+.logo .road {
+  position: absolute;
+  margin-top: -8px;
+  width: 100%;
+  height: 12px;
+  background: #323c6b;
 }
 
 .login {

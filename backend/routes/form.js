@@ -4,15 +4,47 @@ const router = express.Router();
 const essentials = require("../utils/essentials");
 const formModel = require("../models/form");
 const truckModel = require("../models/truck");
-const userModel = require("../models/user");
 const { default: mongoose } = require("mongoose");
 
-const sharp = require("sharp");
-const upload = require("../file");
+router.get("/details", async (req, res) => {
+  try {
+    const { id } = req.query;
+    const form = await formModel.aggregate([
+      { $match: { _id: mongoose.Types.ObjectId(id) } },
+      {
+        $lookup: {
+          from: "images",
+          localField: "imageIDs",
+          foreignField: "_id",
+          as: "images",
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "userID",
+          foreignField: "_id",
+          as: "user",
+          pipeline: [{ $project: { password: 0 } }],
+        },
+      },
+      { $unwind: "$user" },
+    ]);
+    if (form.length === 1) {
+      res.status(200).json({ records: { form: form[0] } });
+      console.log(req.user + " pulled the details about the " + id);
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
 
 router.get("/", async (req, res) => {
   try {
-    var { from, to, show, search, page, target } = req.query;
+    var { from, to, show, search, page, truck } = req.query;
 
     if (!from && !to && show !== "special") {
       const { start, end } = essentials.extractRange(show);
@@ -22,10 +54,10 @@ router.get("/", async (req, res) => {
       }
     }
 
-    const issues = await formModel.aggregate([
+    const forms = await formModel.aggregate([
       show === "special"
         ? {
-            $match: { $or: [{ issueType: 2 }, { issueType: 1 }] },
+            $match: { $or: [{ formType: 2 }, { formType: 1 }] },
           }
         : { $match: {} },
       from && to
@@ -35,161 +67,66 @@ router.get("/", async (req, res) => {
                 {
                   createdAt: { $gte: new Date(from), $lt: new Date(to) },
                 },
-                {
-                  $or: [{ status: 0 }, { status: 1 }],
-                },
               ],
             },
           }
         : { $match: {} },
       {
         $lookup: {
-          from: "targets",
-          localField: "targetID",
+          from: "images",
+          localField: "imageIDs",
           foreignField: "_id",
-          as: "target",
-        },
-      },
-      {
-        $lookup: {
-          from: "problems",
-          localField: "problemID",
-          foreignField: "_id",
-          as: "problem",
-        },
-      },
-      {
-        $lookup: {
-          from: "fixingmethods",
-          localField: "fixingMethodID",
-          foreignField: "_id",
-          as: "fixingMethod",
-        },
-      },
-      {
-        $lookup: {
-          from: "superiors",
-          localField: "problem.superiorID",
-          foreignField: "_id",
-          as: "superior",
+          as: "images",
         },
       },
       {
         $lookup: {
           from: "users",
-          localField: "techniciansID",
+          localField: "userID",
           foreignField: "_id",
-          as: "users",
+          as: "user",
           pipeline: [{ $project: { password: 0 } }],
         },
       },
-      {
-        $lookup: {
-          from: "givelogs",
-          localField: "_id",
-          foreignField: "issueID",
-          pipeline: [
-            {
-              $lookup: {
-                from: "parts",
-                localField: "itemID",
-                pipeline: [
-                  {
-                    $lookup: {
-                      from: "locations",
-                      localField: "locationID",
-                      foreignField: "_id",
-                      as: "location",
-                    },
-                  },
-                  { $unwind: "$location" },
-                ],
-                foreignField: "_id",
-                as: "logItem",
-              },
-            },
-            { $unwind: "$logItem" },
-          ],
-          as: "log",
-        },
-      },
+      { $unwind: "$user" },
       { $sort: { createdAt: -1 } },
-      { $unwind: "$target" },
       search && search !== ""
-        ? { $match: { "problem.problem": { $regex: search, $options: "i" } } }
+        ? {
+            $match: {
+              $or: [
+                { "user.name": { $regex: search, $options: "i" } },
+                { "user.surname": { $regex: search, $options: "i" } },
+              ],
+            },
+          }
         : { $match: {} },
     ]);
 
-    const users = await userModel.find({}).select("-password");
-    const targets = await truckModel.find({});
-    if (issues && users && fixingMethods && targets) {
-      let data = Object.values(issues).sort((a, b) => {
-        if (a.status === 2 && b.status === 2) {
-          return 1;
-        }
-        if (a.status === 0 && b.status !== 0) {
-          return -1;
-        } else if (b.status === 0 && a.status !== 0) {
-          return 1;
-        }
+    var data = Object.values(forms);
 
-        if (a.status === 1 && b.status !== 1) {
-          return -1;
-        } else if (b.status === 1 && a.status !== 1) {
-          return 1;
-        }
-      });
-      if (target) {
+    const trucks = await truckModel.find({});
+    if (forms && trucks) {
+      if (truck) {
         //filter
-        data = data.filter((item) => item.target.target === target);
+        data = data.filter((item) => item.truck === truck);
       }
 
       const length = data.length;
 
       res.status(200).json({
         records: {
-          issues: data.slice((page - 1) * 18, (page - 1) * 18 + 18),
-          users,
-          targets,
+          forms: data.slice((page - 1) * 18, (page - 1) * 18 + 18),
+          trucks: trucks,
           length,
         },
       });
-      console.log("Retrieved issues by target!");
+      console.log("Retrieved forms by truck!");
     } else {
       res.sendStatus(404);
-      console.log("\x1b[31m%s\x1b[0m", "Couldn't retrieve the issues!");
+      console.log("\x1b[31m%s\x1b[0m", "Couldn't retrieve the forms!");
     }
   } catch (error) {
     console.log(error);
-    res.sendStatus(500);
-  }
-});
-
-router.post("/", async (req, res) => {
-  try {
-    const { target } = req.body;
-    const targetID = target._id;
-    const issues = await formModel.find({
-      targetID: targetID,
-      $or: [{ status: 0 }, { status: 1 }],
-    });
-
-    if (issues.length > 0) {
-      res.sendStatus(409);
-    } else {
-      const result = await formModel.create({
-        targetID: targetID,
-        status: 0,
-      });
-      if (result._id) {
-        res.status(201).json({ result });
-        console.log("A problem has been occured in " + target.target + ".");
-      } else {
-        res.sendStatus(400);
-      }
-    }
-  } catch (e) {
-    console.log(e);
     res.sendStatus(500);
   }
 });
@@ -201,178 +138,20 @@ router.delete("/", async (req, res) => {
       const result = await formModel.deleteOne({ _id: id });
       if (result.deletedCount !== 0) {
         res.sendStatus(200);
-        console.log("\x1b[32m%s\x1b[0m", "Issue deleted!");
+        console.log("\x1b[32m%s\x1b[0m", "Form deleted!");
       } else {
         res.sendStatus(400);
         console.log(
           "\x1b[31m%s\x1b[0m",
-          "Couldn't find the issue for deletion. ID of the issue is " + id,
+          "Couldn't find the form for deletion. ID of the form is " + id,
         );
       }
     } else {
       console.log(
         "\x1b[31m%s\x1b[0m",
-        "Couldn't get the reguest for deletion!",
+        "Couldn't get the request for deletion!",
       );
       res.sendStatus(400);
-    }
-  } catch (e) {
-    res.sendStatus(500);
-    console.log(e);
-  }
-});
-
-router.put("/", async (req, res) => {
-  try {
-    var { values, id } = req.body;
-    if (id) {
-      if (values.fixingMethod) {
-        const fixingMethodID = values.fixingMethod?._id;
-        values.fixingMethod = undefined;
-        values.fixingMethodID = fixingMethodID;
-      }
-
-      if (values.superior && values.problem) {
-        var problemID = values.problem?.problem?._id;
-        values.superior = undefined;
-        values.problem = undefined;
-        values.problemID = problemID;
-      }
-      values.techniciansID = values.technicians.map((tech) =>
-        mongoose.Types.ObjectId(tech._id),
-      );
-      values.extraTechnicians = values.extraTechnicians?.map(
-        (extraTech) => extraTech.title,
-      );
-
-      const result = await formModel.updateOne({ _id: id }, { ...values });
-      if (result.modifiedCount !== 0) {
-        res.sendStatus(200);
-        console.log("\x1b[32m%s\x1b[0m", "Issue edited!");
-      } else {
-        res.sendStatus(400);
-        console.log(
-          "\x1b[31m%s\x1b[0m",
-          "Couldn't find the issue for update. ID of the issue is " + id,
-        );
-      }
-    } else {
-      console.log("\x1b[31m%s\x1b[0m", "Couldn't get the reguest for update!");
-      res.sendStatus(400);
-    }
-  } catch (e) {
-    res.sendStatus(500);
-    console.log(e);
-  }
-});
-
-router.put("/start", async (req, res) => {
-  try {
-    const { id } = req.body;
-
-    const issueResult = await formModel.updateOne(
-      { _id: id },
-      {
-        start: essentials.getEST(),
-        status: 1,
-      },
-    );
-    if (issueResult.modifiedCount !== 0) {
-      res.sendStatus(200);
-      console.log(
-        "\x1b[32m%s\x1b[0m",
-        "Technicians started working on Issue " + id,
-      );
-    } else {
-      res.sendStatus(400);
-      console.log(
-        "\x1b[31m%s\x1b[0m",
-        req.user.name + " couldn't started the issue. ID of the issue is " + id,
-      );
-    }
-  } catch (e) {
-    res.sendStatus(500);
-    console.log(e);
-  }
-});
-
-router.put("/stop", async (req, res) => {
-  try {
-    const { id } = req.body;
-
-    const issueResult = await formModel.updateOne(
-      { _id: id },
-      {
-        stop: essentials.getEST(),
-        status: 2,
-      },
-    );
-    if (issueResult.modifiedCount !== 0) {
-      res.sendStatus(200);
-      console.log(
-        "\x1b[32m%s\x1b[0m",
-        "Technicians stopped working on Issue " + id,
-      );
-    } else {
-      res.sendStatus(400);
-      console.log(
-        "\x1b[31m%s\x1b[0m",
-        req.user.name + " couldn't stopped the issue. ID of the issue is " + id,
-      );
-    }
-  } catch (e) {
-    res.sendStatus(500);
-    console.log(e);
-  }
-});
-
-router.put("/pause/start", async (req, res) => {
-  try {
-    const { id } = req.body;
-
-    const issueResult = await formModel.updateOne(
-      { _id: id },
-      {
-        pauseStart: essentials.getEST(),
-        paused: 1,
-      },
-    );
-    if (issueResult.modifiedCount !== 0) {
-      res.sendStatus(200);
-      console.log("\x1b[32m%s\x1b[0m", req.user.name + " paused issue " + id);
-    } else {
-      res.sendStatus(400);
-      console.log(
-        "\x1b[31m%s\x1b[0m",
-        req.user.name + " couldn't paused the issue. ID of the issue is " + id,
-      );
-    }
-  } catch (e) {
-    res.sendStatus(500);
-    console.log(e);
-  }
-});
-
-router.put("/pause/stop", async (req, res) => {
-  try {
-    const { id } = req.body;
-
-    const issueResult = await formModel.updateOne(
-      { _id: id },
-      {
-        pauseStop: essentials.getEST(),
-        paused: 2,
-      },
-    );
-    if (issueResult.modifiedCount !== 0) {
-      res.sendStatus(200);
-      console.log("\x1b[32m%s\x1b[0m", req.user.name + " paused issue " + id);
-    } else {
-      res.sendStatus(400);
-      console.log(
-        "\x1b[31m%s\x1b[0m",
-        req.user.name + " couldn't paused the issue. ID of the issue is " + id,
-      );
     }
   } catch (e) {
     res.sendStatus(500);
@@ -382,94 +161,37 @@ router.put("/pause/stop", async (req, res) => {
 
 router.put("/changeType", async (req, res) => {
   try {
-    var { id, issueType } = req.body;
+    var { id, formType } = req.body;
 
-    const issue = (await formModel.find({ _id: id }))[0];
+    const form = (await formModel.find({ _id: id }))[0];
 
-    if (issue.issueType === issueType) {
-      issueType = 0;
+    if (form.formType === formType) {
+      formType = 0;
     }
 
-    const issueResult = await formModel.updateOne(
+    const formResult = await formModel.updateOne(
       { _id: id },
       {
-        issueType,
+        formType,
       },
     );
-    if (issueResult.modifiedCount !== 0) {
+    if (formResult.modifiedCount !== 0) {
       res.sendStatus(200);
       console.log(
-        "Issue type has been changed to " + issueType + " on Issue " + id,
+        "Form type has been changed to " + formType + " on form " + id,
       );
     } else {
       res.sendStatus(400);
       console.log(
         "\x1b[31m%s\x1b[0m",
         req.user.name +
-          " couldn't change the issue type. ID of the issue is " +
+          " couldn't change the form type. ID of the form is " +
           id,
       );
     }
   } catch (e) {
     res.sendStatus(500);
     console.log(e);
-  }
-});
-
-router.put("/upload", upload.single("file"), async (req, res) => {
-  try {
-    const { id } = req.body;
-    const pipeline = {};
-    if (req.file) {
-      const image = req.file;
-      const path = image.path;
-
-      const filename = image.filename.replace(/\..+$/, "");
-      const newFilename = `thumbnail-${filename}.${path.substring(
-        path.lastIndexOf(".") + 1,
-      )}`;
-      await sharp(path)
-        .rotate()
-        .resize(200)
-        .toFormat("jpeg")
-        .jpeg({ quality: 90 })
-        .toFile(`${image.destination}/${newFilename}`);
-      pipeline.image = req.file.path;
-    }
-
-    const isImageInPipeline = async () => {
-      if (pipeline.image) {
-        if ((await essentials.deleteIssueImage(id)) === 1) {
-          return true;
-        } else {
-          return false;
-        }
-      }
-      return true;
-    };
-
-    const isDeleted = await isImageInPipeline();
-    if (isDeleted && id) {
-      const result = await formModel.updateOne({ _id: id }, pipeline);
-      if (result.modifiedCount !== 0) {
-        console.log("\x1b[32m%s\x1b[0m", "Issue picture has been updated!");
-        res.sendStatus(200);
-      } else {
-        res.sendStatus(400);
-        console.log(
-          "\x1b[31m%s\x1b[0m",
-          req.user.name +
-            " didn't update the issue picture. ID of the issue is " +
-            id,
-        );
-      }
-    } else {
-      console.log("\x1b[31m%s\x1b[0m", "Didn't get the reguest for updating!");
-      res.sendStatus(400);
-    }
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
   }
 });
 

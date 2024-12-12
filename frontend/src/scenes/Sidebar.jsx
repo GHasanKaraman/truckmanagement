@@ -18,7 +18,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { tokens } from "../theme";
 
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import TroubleshootOutlinedIcon from "@mui/icons-material/TroubleshootOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import TableViewIcon from "@mui/icons-material/TableView";
@@ -39,6 +38,7 @@ import useSignOut from "../hooks/useSignOut";
 import { useSnackbar } from "notistack";
 import { verifyPermissions } from "../utils/helpers";
 import { Add } from "@mui/icons-material";
+import truck from "../images/truck.gif";
 
 const Item = ({ title, to, icon, selected, setSelected, sub, parentTitle }) => {
   const theme = useTheme();
@@ -235,17 +235,26 @@ const Sidebar = () => {
       <ProSidebar collapsed={isCollapsed}>
         <Menu iconShape="square">
           <div style={{ width: "100%", textAlign: "center", marginTop: "5px" }}>
-            <p
-              style={{
-                alignSelf: "center",
-                fontWeight: 700,
-                fontSize: 44,
-                color: "#007f43",
-                margin: 0,
-              }}
-            >
-              CiboTrucks
-            </p>
+            {!isCollapsed ? (
+              <p
+                style={{
+                  alignSelf: "center",
+                  fontWeight: 700,
+                  fontSize: 44,
+                  color: "#f55b1a",
+                  margin: 0,
+                }}
+              >
+                CiboTrucks
+              </p>
+            ) : (
+              <img
+                alt="truck"
+                width={80}
+                style={{ marginLeft: -20, padding: 1, marginTop: 5 }}
+                src={truck}
+              />
+            )}
 
             {!isCollapsed ? (
               <Typography variant="h6" color={colors.grey[100]}>

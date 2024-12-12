@@ -50,7 +50,7 @@ const TruckPreOperationalChecklist = (props) => {
   const [users, setUsers] = useState([]);
 
   const [step, setStep] = useState(false);
-  const [driver, setDriver] = useState([[]]);
+  const [driver, setDriver] = useState([]);
 
   useEffect(() => {
     document.title = props.title || "";
@@ -58,7 +58,7 @@ const TruckPreOperationalChecklist = (props) => {
 
   const loadPreOperationalPage = async () => {
     try {
-      const res = await baseRequest.get("/qr/truck", { id });
+      const res = await baseRequest.get("/qr/truck", { params: { id } });
       if (res.data) {
         setTruck(res.data.records.truck);
         setUsers(res.data.records.users);
@@ -131,7 +131,6 @@ const TruckPreOperationalChecklist = (props) => {
           break;
       }
     }
-    setOpen(false);
   };
 
   const uploadRequired = (message) => {

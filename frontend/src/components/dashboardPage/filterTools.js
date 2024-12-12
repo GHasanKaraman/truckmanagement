@@ -39,7 +39,7 @@ const FilterTools = (props) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const [selectedTarget, setSelectedTarget] = useState(null);
+  const [selectedTruck, setSelectedTruck] = useState(null);
   const [selectedCase, setSelectedCase] = useState("today");
   const [searchText, setSearchText] = useState("");
 
@@ -55,14 +55,14 @@ const FilterTools = (props) => {
     if (reset) {
       setFilters({
         selectedCase: key ? key : selectedCase,
-        selectedTarget: null,
+        selectedTruck: null,
         selectedRange: { startDate: "", endDate: "" },
         searchText: "",
       });
     } else {
       setFilters({
         selectedCase: key ? key : selectedCase,
-        selectedTarget: selectedTarget,
+        selectedTruck: selectedTruck,
         selectedRange: { ...getter },
         searchText: searchText,
       });
@@ -111,7 +111,7 @@ const FilterTools = (props) => {
                 setAnchorEl(null);
 
                 setSearchText("");
-                setSelectedTarget(null);
+                setSelectedTruck(null);
                 setter.setStartDate("");
                 setter.setEndDate("");
               }}
@@ -155,7 +155,7 @@ const FilterTools = (props) => {
             </IconButton>
             <InputBase
               sx={{ ml: 1, flex: 1 }}
-              placeholder="Search Issue Problems"
+              placeholder="Search Driver"
               value={searchText}
               inputProps={{ "aria-label": "search issues" }}
               onChange={(e) => {
@@ -204,16 +204,16 @@ const FilterTools = (props) => {
                 <Grid item xs={12} sm={6} lg={4}>
                   <Autocomplete
                     onChange={(_, value) => {
-                      setSelectedTarget(value);
+                      setSelectedTruck(value);
                     }}
-                    value={selectedTarget}
-                    options={props.targets.map(({ target }) => target)}
+                    value={selectedTruck}
+                    options={props.trucks.map(({ truck }) => truck)}
                     renderInput={(params) => (
                       <TextField
                         {...params}
                         variant="filled"
-                        label="Target"
-                        name="target"
+                        label="Truck"
+                        name="truck"
                       />
                     )}
                   />
@@ -237,7 +237,7 @@ const FilterTools = (props) => {
                   handleFilters(undefined, true);
 
                   setSearchText("");
-                  setSelectedTarget(null);
+                  setSelectedTruck(null);
                   setter.setStartDate("");
                   setter.setEndDate("");
                 }}

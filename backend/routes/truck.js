@@ -3,6 +3,24 @@ const router = express.Router();
 
 const truckModel = require("../models/truck");
 
+router.get("/", async (req, res) => {
+  try {
+    const trucks = await truckModel.find({});
+    if (trucks) {
+      res.status(200).json({
+        records: { trucks },
+      });
+      console.log("Retrieved trucks!");
+    } else {
+      res.sendStatus(404);
+      console.log("\x1b[31m%s\x1b[0m", "Didn't retrieve trucks!");
+    }
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
 router.post("/", async (req, res) => {
   try {
     const { truck, facility } = req.body;
@@ -12,7 +30,7 @@ router.post("/", async (req, res) => {
     });
     if (result._id) {
       res.status(201).json({ result });
-      console.log("Truck" + truck + " is written in the database");
+      console.log("Truck " + truck + " is written in the database");
     } else {
       res.sendStatus(400);
     }

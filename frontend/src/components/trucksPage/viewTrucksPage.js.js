@@ -1,12 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import {
-  GridRowModes,
-  DataGrid,
-  GridActionsCellItem,
-  getGridSingleSelectOperators,
-} from "@mui/x-data-grid";
+import { GridRowModes, DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
@@ -16,7 +11,6 @@ import PrintIcon from "@mui/icons-material/Print";
 import {
   Box,
   Button,
-  Chip,
   Dialog,
   DialogActions,
   DialogContent,
@@ -39,7 +33,6 @@ import {
 } from "../../scenes/DataGrid/CustomGridToolBar";
 import PrintComponent from "../../utils/print";
 
-import { AutocompleteEditInputCell } from "../../scenes/DataGrid/AutocompleteEditInputCell";
 import useControl from "../../hooks/useControl";
 import useSignOut from "../../hooks/useSignOut";
 import { errorHandler } from "../../core/errorHandler";
@@ -127,7 +120,7 @@ const ViewTrucksPage = (props) => {
                 <EditIcon
                   sx={{
                     padding: "3px",
-                    background: colors.ciboInnerGreen[400],
+                    background: colors.crusta[400],
                     borderRadius: 1,
                     color: colors.primary[400],
                     fontSize: "25px",
@@ -412,10 +405,10 @@ const ViewTrucksPage = (props) => {
             borderBottom: "none",
           },
           "& .name-column--cell": {
-            color: colors.ciboInnerGreen[300],
+            color: colors.crusta[300],
           },
           "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: colors.ciboInnerGreen[500],
+            backgroundColor: colors.crusta[500],
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
@@ -423,10 +416,10 @@ const ViewTrucksPage = (props) => {
           },
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",
-            backgroundColor: colors.ciboInnerGreen[500],
+            backgroundColor: colors.crusta[500],
           },
           "& .MuiCheckbox-root": {
-            color: `${colors.ciboInnerGreen[200]} !important`,
+            color: `${colors.crusta[200]} !important`,
           },
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
             color: `${colors.grey[100]} !important`,
@@ -441,10 +434,10 @@ const ViewTrucksPage = (props) => {
                       backgroundColor: "red",
                     }*/,
           "& .MuiInputBase-root::after": {
-            borderBottomColor: colors.ciboInnerGreen[500],
+            borderBottomColor: colors.crusta[500],
           },
           "& .MuiInputBase-root::before": {
-            borderBottomColor: colors.ciboInnerGreen[600],
+            borderBottomColor: colors.crusta[600],
           },
         }}
       >

@@ -9,6 +9,7 @@ import { userInformations } from "../../atoms/userAtoms";
 import { useRecoilState } from "recoil";
 
 import truck from "../../images/truck.gif";
+import road from "../../images/road.gif";
 
 import "./login.css";
 import { b64EncodeUnicode } from "../../utils/helpers.js";
@@ -117,14 +118,17 @@ const LoginPage = (props) => {
 
   return (
     <section>
-      <img className="bg" alt="background" src={truck} />
+      <div className="logo">
+        <img className="truck" alt="background" src={truck} />
+        <div className="road" />
+      </div>
       <form className="login" onSubmit={formik.handleSubmit}>
         <p
           style={{
             alignSelf: "center",
             fontWeight: 600,
             fontSize: 70,
-            color: "#007f43",
+            color: "#f55b1a",
             margin: 0,
           }}
         >

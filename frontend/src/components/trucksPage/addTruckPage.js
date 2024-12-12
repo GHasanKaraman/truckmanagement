@@ -106,13 +106,13 @@ const AddTruckPage = (props) => {
               sx={{
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
                 "& .MuiInputBase-root::after": {
-                  borderBottomColor: colors.ciboInnerGreen[500],
+                  borderBottomColor: colors.crusta[500],
                 },
                 "& .MuiInputBase-root::before": {
-                  borderBottomColor: colors.ciboInnerGreen[600],
+                  borderBottomColor: colors.crusta[600],
                 },
                 "& .MuiFormLabel-root.Mui-focused": {
-                  color: colors.ciboInnerGreen[300],
+                  color: colors.crusta[300],
                 },
               }}
             >
