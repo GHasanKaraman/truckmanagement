@@ -162,6 +162,7 @@ const TruckPreOperationalChecklist = (props) => {
 
       frontPicture: null,
       backPicture: null,
+      cabinInsidePicture: null,
       comment: "",
     },
     onSubmit: handleSubmit,
@@ -173,6 +174,9 @@ const TruckPreOperationalChecklist = (props) => {
       areThereDEF: yup.string().required(),
       frontPicture: uploadRequired("Please upload the picture for frontside!"),
       backPicture: uploadRequired("Please upload the picture for backside!"),
+      cabinInsidePicture: uploadRequired(
+        "Please upload the picture for cabin inside!",
+      ),
     }),
   });
 
@@ -545,6 +549,30 @@ const TruckPreOperationalChecklist = (props) => {
                 formik.setFieldValue("backPicture", blob);
               }}
             />
+            <Typography
+              variant="h6"
+              color={colors.grey[100]}
+              fontWeight="600"
+              sx={{ m: "0 0 -20px 0", minWidth: "250px" }}
+            >
+              PICTURE (CABIN INSIDE)
+            </Typography>
+            <UploadImage
+              sx={{ gridColumn: "span 4", justifySelf: "center" }}
+              value={formik.values.cabinInsidePicture}
+              error={
+                !!formik.touched.cabinInsidePicture &&
+                !!formik.errors.cabinInsidePicture
+              }
+              helperText={
+                formik.touched.cabinInsidePicture &&
+                formik.errors.cabinInsidePicture
+              }
+              onChange={(blob) => {
+                formik.setFieldValue("cabinInsidePicture", blob);
+              }}
+            />
+
             <TextField
               multiline
               rows={7}

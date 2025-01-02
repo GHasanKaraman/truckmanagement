@@ -15,7 +15,6 @@ import baseRequest from "../../core/baseRequest";
 import Label from "../Label";
 import StatusIndicator from "../StatusIndicator";
 import LabelResult from "../LabelResult";
-import useControl from "../../hooks/useControl";
 import useSignOut from "../../hooks/useSignOut";
 import { errorHandler } from "../../core/errorHandler";
 import ImageLabel from "../ImageLabel";
@@ -38,7 +37,6 @@ const ViewFormPage = (props) => {
     try {
       setOpen(true);
       const res = await baseRequest.get("/form/details", { params: { id } });
-      console.log(res.data.records.form);
       if (res.data) {
         setData(res.data.records.form);
       } else {
@@ -247,6 +245,16 @@ const ViewFormPage = (props) => {
           fileName={data?.images[1]?.fileName}
         />
         <StatusIndicator status={Boolean(data?.images[1])} />
+      </Stack>
+      <Divider />
+      <Stack direction="row" justifyContent="space-between">
+        <ImageLabel
+          title="
+              Cabin Inside Picture"
+          folderIndex={data?.images[2]?.folderIndex}
+          fileName={data?.images[2]?.fileName}
+        />
+        <StatusIndicator status={Boolean(data?.images[0])} />
       </Stack>
       <Divider />
       <Stack direction="row" justifyContent="space-between">
