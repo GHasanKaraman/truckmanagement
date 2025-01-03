@@ -651,8 +651,8 @@ const DashboardPage = (props) => {
                                       rel="noreferrer"
                                     >
                                       <img
-                                        width={150}
-                                        height={150}
+                                        width={100}
+                                        height={100}
                                         style={{ objectFit: "scale-down" }}
                                         alt="truck"
                                         src={
