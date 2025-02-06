@@ -97,7 +97,6 @@ db.once("open", function () {
 
   app.use("/", authorization);
 
-  app.use("/dashboard", dashboard);
   app.use("/user", user);
   app.use("/truck", truck);
   app.use("/form", form);
