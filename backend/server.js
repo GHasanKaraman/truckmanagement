@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 const moment = require("moment-timezone");
 //
 //express routes
-const dashboard = require("./routes/dashboard.js");
 const qr = require("./routes/qr.js");
 const user = require("./routes/user.js");
 const truck = require("./routes/truck.js");
