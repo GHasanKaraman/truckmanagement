@@ -62,7 +62,7 @@ const Router = () => {
   return (
     <Routes>
       <Route element={<RegularLayout />}>
-        <Route exact path="/" element={<LoginPage title="CiboENG | Login" />} />
+        <Route exact path="/" element={<LoginPage title="CiboTrucks | Login" />} />
         <Route
           exact
           path="/noaccess"
@@ -71,13 +71,13 @@ const Router = () => {
         <Route
           exact
           path="/login"
-          element={<LoginPage title="CiboENG | Login" />}
+          element={<LoginPage title="CiboTrucks | Login" />}
         />
         <Route
           exact
           path="/truck/:id"
           element={
-            <TruckPreOperationalChecklist title="CiboENG | Pre-Operational Checklist" />
+            <TruckPreOperationalChecklist title="CiboTrucks | Pre-Operational Checklist" />
           }
         />
       </Route>
@@ -85,43 +85,43 @@ const Router = () => {
         <Route
           exact
           path="/settings"
-          element={<SettingsPage title="CiboENG | Settings" />}
+          element={<SettingsPage title="CiboTrucks | Settings" />}
         />
 
         <Route
           exact
           path="/users/view"
-          element={<ViewUsersPage title="CiboENG | View Users" />}
+          element={<ViewUsersPage title="CiboTrucks | View Users" />}
         />
         <Route
           exact
           path="/users/add"
-          element={<AddUserPage title="CiboENG | Add User" />}
+          element={<AddUserPage title="CiboTrucks | Add User" />}
         />
         <Route
           exact
           path="/profile"
-          element={<MyProfilePage title="CiboENG | My Profile" />}
+          element={<MyProfilePage title="CiboTrucks | My Profile" />}
         />
         <Route
           exact
           path="/trucks/view"
-          element={<ViewTrucksPage title="CiboENG | View Trucks" />}
+          element={<ViewTrucksPage title="CiboTrucks | View Trucks" />}
         />
         <Route
           exact
           path="/trucks/add"
-          element={<AddTruckPage title="CiboENG | Add Truck" />}
+          element={<AddTruckPage title="CiboTrucks | Add Truck" />}
         />
         <Route
           exact
           path="/dashboard"
-          element={<DashboardPage title="CiboENG | Dashboard" />}
+          element={<DashboardPage title="CiboTrucks | Dashboard" />}
         />
         <Route
           exact
           path="/form/:id"
-          element={<ViewFormPage title="CiboENG | Form Details" />}
+          element={<ViewFormPage title="CiboTrucks | Form Details" />}
         />
         <Route path="*" element={<Navigate to="/" />} />
       </Route>
